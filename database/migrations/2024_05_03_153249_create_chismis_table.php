@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('chismis', function (Blueprint $table) {
             $table->uuid();
-            $table->string('alias')->unique();
-            $table->string('password');
-            $table->string('contact_number')->unique();
-            $table->rememberToken();
+            $table->string('subject');
+            $table->text('content');
+            $table->json('tags')->nullable();
+            $table->integer('reacts');
+            $table->foreignIdFor(User::class);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('chismis');
     }
 };
